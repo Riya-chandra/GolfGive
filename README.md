@@ -1,4 +1,4 @@
-# GolfGive — Golf Charity Subscription Platform
+# GolfGive - Golf Charity Subscription Platform
 
 A subscription-based web application combining golf performance tracking, charity fundraising, and a monthly draw-based reward engine.
 
@@ -192,4 +192,4 @@ src/
 
 ---
 
-Built with ❤️ for Digital Heroes selection process · GolfGive Platform
+Built with ❤️ for Digital Heroes · GolfGive Platform
