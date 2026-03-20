@@ -1,0 +1,169 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap');
+
+:root {
+  --color-forest: #1a5c28;
+  --color-forest-light: #2d8535;
+  --color-forest-dark: #0f3517;
+  --color-gold: #c9a227;
+  --color-gold-light: #f0c040;
+  --color-cream: #faf7f2;
+  --color-charcoal: #1a1a1a;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background-color: #faf7f2;
+  color: #1a1a1a;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { font-family: 'Playfair Display', Georgia, serif; line-height: 1.15; letter-spacing: -0.02em; }
+.font-display { font-family: 'Playfair Display', Georgia, serif; }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #faf7f2; }
+::-webkit-scrollbar-thumb { background: #1a5c28; border-radius: 3px; }
+
+@layer components {
+  /* Buttons */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 bg-forest-600 hover:bg-forest-700 text-white font-medium px-6 py-3 rounded-full transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0;
+  }
+  .btn-gold {
+    @apply inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-gray-900 font-semibold px-6 py-3 rounded-full transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5;
+  }
+  .btn-outline {
+    @apply inline-flex items-center gap-2 border-2 border-forest-600 text-forest-600 hover:bg-forest-600 hover:text-white font-medium px-6 py-3 rounded-full transition-all duration-200;
+  }
+
+  /* Cards */
+  .card {
+    @apply bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden;
+  }
+  .card-hover {
+    @apply bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md hover:-translate-y-1 transition-all duration-300;
+  }
+  .stat-card {
+    @apply bg-white rounded-2xl p-6 border border-gray-100 shadow-sm;
+  }
+
+  /* Form */
+  .input-field {
+    @apply w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-forest-500 focus:border-transparent transition-all duration-200 bg-white;
+  }
+  .label {
+    @apply block text-sm font-medium text-gray-700 mb-1.5;
+  }
+
+  /* Badges — using standard Tailwind colors only */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
+  }
+  .badge-green {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800;
+  }
+  .badge-gold {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800;
+  }
+  .badge-red {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700;
+  }
+  .badge-gray {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600;
+  }
+}
+
+/* ── Custom components (plain CSS, no @apply with custom tokens) ── */
+
+.number-ball {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1a5c28, #2d8535);
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 12px rgba(26, 92, 40, 0.3);
+  transition: transform 0.2s ease;
+}
+.number-ball:hover { transform: scale(1.1); }
+.number-ball.gold {
+  background: linear-gradient(135deg, #c9a227, #f0c040);
+  color: #1a1a1a;
+  box-shadow: 0 4px 12px rgba(201, 162, 39, 0.35);
+}
+
+.hero-gradient {
+  background: linear-gradient(135deg, #0f3517 0%, #1a5c28 30%, #1e6b26 60%, #0f3517 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 12s ease infinite;
+}
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.blob { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+
+.noise { position: relative; }
+.noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes scoreSlide {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.score-item { animation: scoreSlide 0.3s ease forwards; }
+
+.spinner {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 3px solid rgba(26, 92, 40, 0.2);
+  border-top-color: #1a5c28;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in { animation: fadeUp 0.4s ease forwards; }
+
+/* Data table */
+.data-table { width: 100%; font-size: 0.875rem; }
+.data-table th {
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #f3f4f6;
+  background-color: #f9fafb;
+}
+.data-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #f9fafb;
+  color: #374151;
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background-color: #f9fafb; }
