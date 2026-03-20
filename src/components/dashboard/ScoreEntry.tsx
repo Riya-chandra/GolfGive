@@ -21,9 +21,7 @@ export default function ScoreEntry({ scores: initialScores, isActive }: Props) {
     if (!newScore || !newDate) return;
     
     const scoreVal = parseInt(newScore);
-    if (scoreVal < 1 || scoreVal > 45) {
-      setError('Score must be between 1 and 45');
-      return;
+    if (isNaN(scoreVal) || scoreVal < 1 || scoreVal > 45) {
     }
 
     setLoading(true);

@@ -1,17 +1,10 @@
 import { redirect } from 'next/navigation';
-
 import Link from 'next/link';
-
 import { getCurrentUser } from '@/lib/auth';
-
 import { supabaseAdmin } from '@/lib/supabase';
-
 import Navbar from '@/components/layout/Navbar';
-
 import ScoreEntry from '@/components/dashboard/ScoreEntry';
-
 import WinningsSummary from '@/components/dashboard/WinningsSummary';
-
 import { GolfScore, Draw, Winner, MONTH_NAMES } from '@/types';
 
 async function getDashboardData(userId: string) {

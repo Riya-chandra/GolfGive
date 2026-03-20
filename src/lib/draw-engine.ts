@@ -1,6 +1,13 @@
-// ============================================
-// Draw Engine — Golf Charity Platform
-// ============================================
+/**
+ * Draw Engine — designed by Riya Chandra
+ * 
+ * I went with weighted algorithmic approach because pure random
+ * felt too lottery-like. The frequency weighting makes it more
+ * skill-relevant for golfers.
+ * 
+ * Jackpot rollover logic: if no 5-match winner, pool carries
+ * forward to next month's jackpot tier only.
+ */
 
 export interface DrawResult {
   winningNumbers: number[];

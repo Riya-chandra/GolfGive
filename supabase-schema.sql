@@ -1,14 +1,8 @@
--- ============================================
--- Golf Charity Subscription Platform Schema
--- Run this in Supabase SQL Editor
--- ============================================
 
 -- Enable UUID extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
--- ============================================
--- USERS TABLE
--- ============================================
+
 CREATE TABLE users (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   email TEXT UNIQUE NOT NULL,
