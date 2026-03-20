@@ -192,4 +192,4 @@ src/
 
 ---
 
-Built with ❤️ for Digital Heroes selection process · GolfGive Platform
+Built with ❤️ for Digital Heroes · GolfGive Platform
