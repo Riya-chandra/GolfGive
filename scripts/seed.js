@@ -1,11 +1,3 @@
-/**
- * Seed Script — GolfGive Platform
- * Run: node scripts/seed.js
- * 
- * Creates test admin and subscriber accounts.
- * Requires: NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env.local
- */
-
 const { createClient } = require('@supabase/supabase-js');
 const bcrypt = require('bcryptjs');
 require('dotenv').config({ path: '.env.local' });

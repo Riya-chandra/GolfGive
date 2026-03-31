@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+// ============================================
+// Platform Types
+// ============================================
+
+>>>>>>> 3fda15e (added)
 export interface User {
   id: string;
   email: string;

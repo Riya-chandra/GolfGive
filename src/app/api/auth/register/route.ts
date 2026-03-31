@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { hashPassword, signToken, setSessionCookie } from '@/lib/auth';
+<<<<<<< HEAD
+=======
+import { sendWelcomeEmail } from '@/lib/email';
+>>>>>>> 3fda15e (added)
 
 export async function POST(req: NextRequest) {
   try {
@@ -52,6 +56,12 @@ export async function POST(req: NextRequest) {
     const token = signToken({ userId: user.id, email: user.email, role: user.role });
     const cookieOptions = setSessionCookie(token);
 
+<<<<<<< HEAD
+=======
+    // Send welcome email (non-blocking)
+    sendWelcomeEmail(user.email, user.full_name).catch(console.error);
+
+>>>>>>> 3fda15e (added)
     const response = NextResponse.json({
       success: true,
       user: { id: user.id, email: user.email, fullName: user.full_name, role: user.role },

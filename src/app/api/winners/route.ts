@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { getSession } from '@/lib/auth';
+<<<<<<< HEAD
+=======
+import { sendWinnerVerificationEmail, sendPayoutApprovedEmail } from '@/lib/email';
+>>>>>>> 3fda15e (added)
 
 // GET /api/winners — get user's winnings or all winners (admin)
 export async function GET(req: NextRequest) {
@@ -47,6 +51,17 @@ export async function PATCH(req: NextRequest) {
   if (action === 'submit_proof') {
     if (!proofUrl) return NextResponse.json({ error: 'Proof URL required' }, { status: 400 });
 
+<<<<<<< HEAD
+=======
+    // Fetch winner + user details for email
+    const { data: winnerData } = await supabaseAdmin
+      .from('winners')
+      .select('match_type, prize_amount, users(full_name, email)')
+      .eq('id', winnerId)
+      .eq('user_id', session.userId)
+      .single();
+
+>>>>>>> 3fda15e (added)
     const { error } = await supabaseAdmin
       .from('winners')
       .update({
@@ -55,9 +70,29 @@ export async function PATCH(req: NextRequest) {
         submitted_at: new Date().toISOString(),
       })
       .eq('id', winnerId)
+<<<<<<< HEAD
       .eq('user_id', session.userId); // Ensure ownership
 
     if (error) return NextResponse.json({ error: 'Failed to submit proof' }, { status: 500 });
+=======
+      .eq('user_id', session.userId);
+
+    if (error) return NextResponse.json({ error: 'Failed to submit proof' }, { status: 500 });
+
+    // Send verification pending email (non-blocking)
+    if (winnerData) {
+      const u = winnerData.users as unknown as { full_name: string; email: string } | null;
+      if (u) {
+        sendWinnerVerificationEmail(
+          u.email,
+          u.full_name,
+          winnerData.match_type,
+          winnerData.prize_amount
+        ).catch(console.error);
+      }
+    }
+
+>>>>>>> 3fda15e (added)
     return NextResponse.json({ success: true, message: 'Proof submitted for review' });
   }
 
@@ -65,6 +100,16 @@ export async function PATCH(req: NextRequest) {
   if (action === 'admin_verify') {
     if (session.role !== 'admin') return NextResponse.json({ error: 'Admin access required' }, { status: 403 });
 
+<<<<<<< HEAD
+=======
+    // Fetch winner + user details for email
+    const { data: winnerData } = await supabaseAdmin
+      .from('winners')
+      .select('match_type, prize_amount, users(full_name, email)')
+      .eq('id', winnerId)
+      .single();
+
+>>>>>>> 3fda15e (added)
     const updates: Record<string, unknown> = {
       payment_status: paymentStatus,
       verified_at: new Date().toISOString(),
@@ -79,6 +124,22 @@ export async function PATCH(req: NextRequest) {
       .eq('id', winnerId);
 
     if (error) return NextResponse.json({ error: 'Failed to update winner status' }, { status: 500 });
+<<<<<<< HEAD
+=======
+
+    // Send payout approved email (non-blocking)
+    if (paymentStatus === 'paid' && winnerData) {
+      const u = winnerData.users as unknown as { full_name: string; email: string } | null;
+      if (u) {
+        sendPayoutApprovedEmail(
+          u.email,
+          u.full_name,
+          winnerData.prize_amount
+        ).catch(console.error);
+      }
+    }
+
+>>>>>>> 3fda15e (added)
     return NextResponse.json({ success: true });
   }
 

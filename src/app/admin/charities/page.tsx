@@ -1,6 +1,14 @@
 import { redirect } from 'next/navigation';
+<<<<<<< HEAD
 import { getCurrentUser } from '@/lib/auth';
 import Navbar from '@/components/layout/Navbar';
+=======
+
+import { getCurrentUser } from '@/lib/auth';
+
+import Navbar from '@/components/layout/Navbar';
+
+>>>>>>> 3fda15e (added)
 import AdminCharitiesClient from '@/components/admin/AdminCharitiesClient';
 
 export const dynamic = 'force-dynamic';

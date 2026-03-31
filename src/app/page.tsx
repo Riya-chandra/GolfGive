@@ -1,7 +1,17 @@
 import Link from 'next/link';
+<<<<<<< HEAD
 import { supabaseAdmin } from '@/lib/supabase';
 import { getSession } from '@/lib/auth';
 import Navbar from '@/components/layout/Navbar';
+=======
+
+import { supabaseAdmin } from '@/lib/supabase';
+
+import { getSession } from '@/lib/auth';
+
+import Navbar from '@/components/layout/Navbar';
+
+>>>>>>> 3fda15e (added)
 import Footer from '@/components/layout/Footer';
 
 import { Charity, Draw, MONTH_NAMES } from '@/types';

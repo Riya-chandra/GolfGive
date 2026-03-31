@@ -1,8 +1,20 @@
 import Link from 'next/link';
+<<<<<<< HEAD
 import { supabaseAdmin } from '@/lib/supabase';
 import { getSession } from '@/lib/auth';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+=======
+
+import { supabaseAdmin } from '@/lib/supabase';
+
+import { getSession } from '@/lib/auth';
+
+import Navbar from '@/components/layout/Navbar';
+
+import Footer from '@/components/layout/Footer';
+
+>>>>>>> 3fda15e (added)
 import { Charity } from '@/types';
 
 async function getCharities() {

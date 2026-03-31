@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation';
+<<<<<<< HEAD
 import Link from 'next/link';
 import { getCurrentUser } from '@/lib/auth';
 import { supabaseAdmin } from '@/lib/supabase';
@@ -9,6 +10,34 @@ import { GolfScore, Draw, Winner, MONTH_NAMES } from '@/types';
 
 async function getDashboardData(userId: string) {
   const [scoresRes, latestDrawRes, winningsRes] = await Promise.all([
+=======
+
+import Link from 'next/link';
+
+import { getCurrentUser } from '@/lib/auth';
+
+import { supabaseAdmin } from '@/lib/supabase';
+
+import Navbar from '@/components/layout/Navbar';
+
+import ScoreEntry from '@/components/dashboard/ScoreEntry';
+
+import WinningsSummary from '@/components/dashboard/WinningsSummary';
+
+import CharitySettings from '@/components/dashboard/CharitySettings';
+
+import DrawEntryButton from '@/components/draws/DrawEntryButton';
+
+import { GolfScore, Draw, Winner, MONTH_NAMES } from '@/types';
+
+// Server-component-safe wrapper (client component used inline)
+function DrawEntryButtonWrapper({ drawId, isActive, hasScores }: { drawId: string; isActive: boolean; hasScores: boolean }) {
+  return <DrawEntryButton drawId={drawId} isActive={isActive} hasScores={hasScores} />;
+}
+
+async function getDashboardData(userId: string) {
+  const [scoresRes, latestDrawRes, winningsRes, upcomingDrawRes] = await Promise.all([
+>>>>>>> 3fda15e (added)
     supabaseAdmin
       .from('golf_scores')
       .select('*')
@@ -28,12 +57,26 @@ async function getDashboardData(userId: string) {
       .eq('user_id', userId)
       .order('created_at', { ascending: false })
       .limit(5),
+<<<<<<< HEAD
+=======
+    supabaseAdmin
+      .from('draws')
+      .select('*')
+      .in('status', ['upcoming', 'simulated'])
+      .order('year', { ascending: false })
+      .order('month', { ascending: false })
+      .limit(1),
+>>>>>>> 3fda15e (added)
   ]);
 
   return {
     scores: (scoresRes.data || []) as GolfScore[],
     latestDraw: (latestDrawRes.data?.[0] || null) as Draw | null,
     winnings: (winningsRes.data || []) as (Winner & { draws: { month: number; year: number } })[],
+<<<<<<< HEAD
+=======
+    upcomingDraw: (upcomingDrawRes.data?.[0] || null) as Draw | null,
+>>>>>>> 3fda15e (added)
   };
 }
 
@@ -43,7 +86,11 @@ export default async function DashboardPage() {
   const user = await getCurrentUser();
   if (!user) redirect('/auth/login');
 
+<<<<<<< HEAD
   const { scores, latestDraw, winnings } = await getDashboardData(user.id);
+=======
+  const { scores, latestDraw, winnings, upcomingDraw } = await getDashboardData(user.id);
+>>>>>>> 3fda15e (added)
 
   const isActive = user.subscription_status === 'active';
   const totalWon = winnings.reduce((sum: number, w: Winner) => sum + w.prize_amount, 0);
@@ -144,6 +191,7 @@ export default async function DashboardPage() {
               {/* Charity contribution card */}
               <div className="card p-6">
                 <h3 className="font-display font-bold text-lg text-charcoal mb-3">Your charity</h3>
+<<<<<<< HEAD
                 {user.charities ? (
                   <>
                     <div className="font-semibold text-gray-700">{user.charities.name}</div>
@@ -166,6 +214,30 @@ export default async function DashboardPage() {
                 )}
               </div>
 
+=======
+                <CharitySettings
+                  currentCharityId={user.selected_charity_id || null}
+                  currentCharityName={user.charities?.name || null}
+                  currentPct={user.charity_contribution_pct}
+                />
+              </div>
+
+              {/* Upcoming draw entry card */}
+              {upcomingDraw && (
+                <div className="card p-6 border-2 border-forest-200">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-xl">🎯</span>
+                    <h3 className="font-display font-bold text-lg text-charcoal">Next Draw</h3>
+                  </div>
+                  <p className="text-xs text-gray-400 mb-4">
+                    {MONTH_NAMES[upcomingDraw.month - 1]} {upcomingDraw.year} · Jackpot £{upcomingDraw.jackpot_pool.toFixed(2)}
+                  </p>
+                  {/* DrawEntryButton is a client component — import at top */}
+                  <DrawEntryButtonWrapper drawId={upcomingDraw.id} isActive={isActive} hasScores={scores.length > 0} />
+                </div>
+              )}
+
+>>>>>>> 3fda15e (added)
               {/* Pending payouts */}
               {pendingPayout.length > 0 && (
                 <div className="card p-6 border-gold-300 border-2">

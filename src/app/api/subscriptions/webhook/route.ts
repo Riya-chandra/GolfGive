@@ -63,6 +63,34 @@ export async function POST(req: NextRequest) {
       await supabaseAdmin.from('users').update({ subscription_status: 'cancelled', stripe_subscription_id: null }).eq('stripe_customer_id', sub.customer as string);
       break;
     }
+<<<<<<< HEAD
+=======
+    case 'checkout.session.completed': {
+      // Also handle one-off donation payments
+      const session = event.data.object as Stripe.Checkout.Session;
+      if (session.metadata?.type === 'donation' && session.mode === 'payment') {
+        const { userId, charityId } = session.metadata;
+        if (userId && charityId) {
+          const donationAmount = (session.amount_total || 0) / 100;
+          await supabaseAdmin.from('donations').insert({
+            user_id: userId,
+            charity_id: charityId,
+            amount: donationAmount,
+            stripe_payment_intent_id: session.payment_intent as string,
+            status: 'completed',
+          });
+          // Update charity total_raised
+          const { data: charity } = await supabaseAdmin.from('charities').select('total_raised').eq('id', charityId).single();
+          if (charity) {
+            await supabaseAdmin.from('charities').update({
+              total_raised: (charity.total_raised || 0) + donationAmount,
+            }).eq('id', charityId);
+          }
+        }
+      }
+      break;
+    }
+>>>>>>> 3fda15e (added)
   }
 
   return NextResponse.json({ received: true });

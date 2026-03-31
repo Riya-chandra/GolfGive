@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /**
  * Draw Engine — designed by Riya Chandra
  * 
@@ -8,6 +9,11 @@
  * Jackpot rollover logic: if no 5-match winner, pool carries
  * forward to next month's jackpot tier only.
  */
+=======
+// ============================================
+// Draw Engine — Golf Charity Platform
+// ============================================
+>>>>>>> 3fda15e (added)
 
 export interface DrawResult {
   winningNumbers: number[];

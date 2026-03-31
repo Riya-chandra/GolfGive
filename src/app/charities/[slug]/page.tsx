@@ -1,10 +1,28 @@
 import { notFound } from 'next/navigation';
+<<<<<<< HEAD
 import Link from 'next/link';
 import { supabaseAdmin } from '@/lib/supabase';
 import { getSession } from '@/lib/auth';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 
+=======
+
+import Link from 'next/link';
+
+import { supabaseAdmin } from '@/lib/supabase';
+
+import { getSession } from '@/lib/auth';
+
+import Navbar from '@/components/layout/Navbar';
+
+import Footer from '@/components/layout/Footer';
+
+import DonateButton from '@/components/charities/DonateButton';
+
+import SetCharityButton from '@/components/charities/SetCharityButton';
+
+>>>>>>> 3fda15e (added)
 export const dynamic = 'force-dynamic';
 
 export default async function CharityDetailPage({ params }: { params: { slug: string } }) {
@@ -145,7 +163,11 @@ export default async function CharityDetailPage({ params }: { params: { slug: st
 
             {/* Sidebar */}
             <div className="space-y-5">
+<<<<<<< HEAD
               {/* Donate card */}
+=======
+              {/* Subscribe & give card */}
+>>>>>>> 3fda15e (added)
               <div className="card p-6 border-2 border-forest-600">
                 <h3 className="font-display font-bold text-xl text-charcoal mb-2">Support {charity.name.split(' ')[0]}</h3>
                 <p className="text-sm text-gray-500 mb-5">
@@ -153,17 +175,41 @@ export default async function CharityDetailPage({ params }: { params: { slug: st
                 </p>
                 <Link
                   href={`/auth/signup?charity=${charity.id}`}
+<<<<<<< HEAD
                   className="btn-primary w-full justify-center"
+=======
+                  className="btn-primary w-full justify-center block text-center"
+>>>>>>> 3fda15e (added)
                 >
                   Subscribe & give →
                 </Link>
                 {session && (
                   <div className="mt-3 text-center">
+<<<<<<< HEAD
                     <UpdateCharityButton charityId={charity.id} charityName={charity.name} />
+=======
+                    <SetCharityButton charityId={charity.id} />
+>>>>>>> 3fda15e (added)
                   </div>
                 )}
               </div>
 
+<<<<<<< HEAD
+=======
+              {/* Independent donation card */}
+              <div className="card p-6">
+                <h3 className="font-display font-bold text-lg text-charcoal mb-1">One-off donation</h3>
+                <p className="text-sm text-gray-400 mb-4">
+                  Not a subscriber? You can still donate directly to {charity.name.split(' ')[0]} — 100% goes to the charity.
+                </p>
+                <DonateButton
+                  charityId={charity.id}
+                  charityName={charity.name}
+                  isLoggedIn={!!session}
+                />
+              </div>
+
+>>>>>>> 3fda15e (added)
               {/* Stats */}
               <div className="card p-6">
                 <h3 className="font-semibold text-sm text-gray-500 uppercase tracking-wider mb-4">Impact</h3>
@@ -200,6 +246,7 @@ export default async function CharityDetailPage({ params }: { params: { slug: st
   );
 }
 
+<<<<<<< HEAD
 function UpdateCharityButton({ charityId, charityName }: { charityId: string; charityName: string }) {
   return (
     <form action={async () => {
@@ -213,3 +260,6 @@ function UpdateCharityButton({ charityId, charityName }: { charityId: string; ch
     </form>
   );
 }
+=======
+// SetCharityButton is imported from @/components/charities/SetCharityButton
+>>>>>>> 3fda15e (added)

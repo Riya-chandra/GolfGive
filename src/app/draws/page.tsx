@@ -1,15 +1,28 @@
 import { supabaseAdmin } from '@/lib/supabase';
 
+<<<<<<< HEAD
 import { getSession } from '@/lib/auth';
+=======
+import { getSession, getCurrentUser } from '@/lib/auth';
+>>>>>>> 3fda15e (added)
 
 import Navbar from '@/components/layout/Navbar';
 
 import Footer from '@/components/layout/Footer';
 
+<<<<<<< HEAD
 import { Draw, MONTH_NAMES } from '@/types';
 
 async function getDrawsData() {
   const [drawsRes, winnersRes] = await Promise.all([
+=======
+import DrawEntryButton from '@/components/draws/DrawEntryButton';
+
+import { Draw, MONTH_NAMES } from '@/types';
+
+async function getDrawsData() {
+  const [publishedRes, upcomingRes, winnersRes] = await Promise.all([
+>>>>>>> 3fda15e (added)
     supabaseAdmin
       .from('draws')
       .select('*')
@@ -17,12 +30,22 @@ async function getDrawsData() {
       .order('year', { ascending: false })
       .order('month', { ascending: false }),
     supabaseAdmin
+<<<<<<< HEAD
+=======
+      .from('draws')
+      .select('*')
+      .in('status', ['upcoming', 'simulated'])
+      .order('year', { ascending: false })
+      .order('month', { ascending: false }),
+    supabaseAdmin
+>>>>>>> 3fda15e (added)
       .from('winners')
       .select('draw_id, match_type, prize_amount, payment_status')
       .in('payment_status', ['paid', 'approved', 'verification_required', 'pending']),
   ]);
 
   return {
+<<<<<<< HEAD
     draws: (drawsRes.data || []) as Draw[],
     winners: (drawsRes.data ? winnersRes.data || [] : []) as Array<{
     draw_id: string;
@@ -30,14 +53,41 @@ async function getDrawsData() {
     prize_amount: number;
     payment_status: string;
   }>,
+=======
+    publishedDraws: (publishedRes.data || []) as Draw[],
+    upcomingDraws: (upcomingRes.data || []) as Draw[],
+    winners: (winnersRes.data || []) as Array<{
+      draw_id: string;
+      match_type: string;
+      prize_amount: number;
+      payment_status: string;
+    }>,
+>>>>>>> 3fda15e (added)
   };
 }
 
 export const dynamic = 'force-dynamic';
 
 export default async function DrawsPage() {
+<<<<<<< HEAD
   const session = await getSession();
   const { draws, winners } = await getDrawsData();
+=======
+  const [session, user] = await Promise.all([getSession(), getCurrentUser()]);
+  const { publishedDraws, upcomingDraws, winners } = await getDrawsData();
+
+  // Get user's score count for entry eligibility
+  let userScoreCount = 0;
+  if (user) {
+    const { count } = await supabaseAdmin
+      .from('golf_scores')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', user.id);
+    userScoreCount = count || 0;
+  }
+
+  const isActive = user?.subscription_status === 'active';
+>>>>>>> 3fda15e (added)
 
   // Group winners by draw
   const winnersByDraw: Record<string, typeof winners> = {};
@@ -82,18 +132,91 @@ export default async function DrawsPage() {
         </div>
       </section>
 
+<<<<<<< HEAD
       {/* Draws list */}
       <section className="bg-cream py-14">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           {draws.length === 0 ? (
+=======
+      {/* Upcoming draws — with entry button */}
+      {upcomingDraws.length > 0 && (
+        <section className="bg-white border-b border-gray-100 py-10">
+          <div className="max-w-7xl mx-auto px-4 md:px-8">
+            <h2 className="font-display text-2xl font-bold text-charcoal mb-6 flex items-center gap-3">
+              <span>🎯</span> Upcoming Draw
+            </h2>
+            <div className="space-y-4">
+              {upcomingDraws.map((draw) => (
+                <div key={draw.id} className="card p-6 md:p-8 border-2 border-forest-400">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div>
+                      <div className="flex items-center gap-3 mb-1">
+                        <h3 className="font-display text-2xl font-bold text-charcoal">
+                          {MONTH_NAMES[draw.month - 1]} {draw.year}
+                        </h3>
+                        <span className="badge badge-green">Open</span>
+                      </div>
+                      <p className="text-sm text-gray-500 mb-4">
+                        Log your scores and enter to be part of this draw. Entry closes when the draw runs.
+                      </p>
+                      <div className="flex gap-6 flex-wrap">
+                        <div>
+                          <div className="text-xs text-gray-400">Prize pool</div>
+                          <div className="font-display font-bold text-xl text-charcoal">£{draw.total_pool.toFixed(2)}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-gray-400">Jackpot</div>
+                          <div className="font-display font-bold text-xl text-gold-600">£{draw.jackpot_pool.toFixed(2)}</div>
+                        </div>
+                        {draw.rollover_amount > 0 && (
+                          <div>
+                            <div className="text-xs text-amber-500">Rollover included</div>
+                            <div className="font-bold text-amber-600">+£{draw.rollover_amount.toFixed(2)}</div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex-shrink-0">
+                      {session ? (
+                        <DrawEntryButton
+                          drawId={draw.id}
+                          isActive={isActive}
+                          hasScores={userScoreCount > 0}
+                        />
+                      ) : (
+                        <a href="/auth/login" className="btn-primary text-sm">
+                          Log in to enter →
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Published draws list */}
+      <section className="bg-cream py-14">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          {publishedDraws.length === 0 ? (
+>>>>>>> 3fda15e (added)
             <div className="text-center py-20">
               <div className="text-6xl mb-4">🎯</div>
               <h2 className="font-display text-2xl font-bold text-charcoal mb-2">No draws yet</h2>
               <p className="text-gray-500">Check back soon — draws run monthly.</p>
             </div>
           ) : (
+<<<<<<< HEAD
             <div className="space-y-6">
               {draws.map((draw, idx) => {
+=======
+            <>
+              <h2 className="font-display text-2xl font-bold text-charcoal mb-6">Past Draws</h2>
+            <div className="space-y-6">
+              {publishedDraws.map((draw, idx) => {
+>>>>>>> 3fda15e (added)
                 const drawWinners = winnersByDraw[draw.id] || [];
                 const hasJackpot = draw.jackpot_rolled_over;
                 const isLatest = idx === 0;
@@ -181,6 +304,10 @@ export default async function DrawsPage() {
                 );
               })}
             </div>
+<<<<<<< HEAD
+=======
+            </>
+>>>>>>> 3fda15e (added)
           )}
         </div>
       </section>
