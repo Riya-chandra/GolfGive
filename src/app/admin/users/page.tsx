@@ -8,11 +8,8 @@ import Navbar from '@/components/layout/Navbar';
 
 import AdminUserActions from '@/components/admin/AdminUserActions';
 
-<<<<<<< HEAD
-=======
 import AdminScoreEditor from '@/components/admin/AdminScoreEditor';
 
->>>>>>> 3fda15e (added)
 export const dynamic = 'force-dynamic';
 
 export default async function AdminUsersPage() {
@@ -91,14 +88,11 @@ export default async function AdminUsersPage() {
                         {new Date(u.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
                       </td>
                       <td>
-<<<<<<< HEAD
                         <AdminUserActions userId={u.id} currentStatus={u.subscription_status} />
-=======
                         <div className="flex gap-2 flex-wrap">
                           <AdminUserActions userId={u.id} currentStatus={u.subscription_status} />
                           <AdminScoreEditor userId={u.id} userName={u.full_name} />
                         </div>
->>>>>>> 3fda15e (added)
                       </td>
                     </tr>
                   ))}

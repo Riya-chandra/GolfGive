@@ -1,23 +1,10 @@
 import { redirect } from 'next/navigation';
-<<<<<<< HEAD
 import Link from 'next/link';
 import { getCurrentUser } from '@/lib/auth';
 import { supabaseAdmin } from '@/lib/supabase';
 import Navbar from '@/components/layout/Navbar';
 import AdminDrawManager from '@/components/admin/AdminDrawManager';
-=======
 
-import Link from 'next/link';
-
-import { getCurrentUser } from '@/lib/auth';
-
-import { supabaseAdmin } from '@/lib/supabase';
-
-import Navbar from '@/components/layout/Navbar';
-
-import AdminDrawManager from '@/components/admin/AdminDrawManager';
-
->>>>>>> 3fda15e (added)
 import { MONTH_NAMES } from '@/types';
 
 async function getAdminData() {
