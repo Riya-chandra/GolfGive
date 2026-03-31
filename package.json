@@ -24,10 +24,7 @@
     "@types/react": "^19.2.14",
     "autoprefixer": "^10.4.27",
     "bcryptjs": "^3.0.3",
-<<<<<<< HEAD
     "dotenv": "^17.3.1",
-=======
->>>>>>> 3fda15e (added)
     "framer-motion": "^12.38.0",
     "jsonwebtoken": "^9.0.3",
     "lucide-react": "^0.577.0",
