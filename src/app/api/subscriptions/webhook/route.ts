@@ -63,8 +63,6 @@ export async function POST(req: NextRequest) {
       await supabaseAdmin.from('users').update({ subscription_status: 'cancelled', stripe_subscription_id: null }).eq('stripe_customer_id', sub.customer as string);
       break;
     }
-<<<<<<< HEAD
-=======
     case 'checkout.session.completed': {
       // Also handle one-off donation payments
       const session = event.data.object as Stripe.Checkout.Session;
@@ -90,7 +88,6 @@ export async function POST(req: NextRequest) {
       }
       break;
     }
->>>>>>> 3fda15e (added)
   }
 
   return NextResponse.json({ received: true });
