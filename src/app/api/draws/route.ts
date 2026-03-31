@@ -7,11 +7,9 @@ import {
   checkMatch,
   calculatePrizePools,
 } from '@/lib/draw-engine';
-<<<<<<< HEAD
-=======
 import { sendDrawResultEmail } from '@/lib/email';
 import { MONTH_NAMES } from '@/types';
->>>>>>> 3fda15e (added)
+
 
 export async function GET(req: NextRequest) {
   const session = await getSession();
@@ -181,8 +179,7 @@ export async function POST(req: NextRequest) {
       jackpot_rolled_over: fiveMatchUsers.length === 0,
     }).eq('id', drawId);
 
-<<<<<<< HEAD
-=======
+
     // Send draw result emails to all entrants (non-blocking)
     ;(async () => {
       try {
@@ -209,8 +206,6 @@ export async function POST(req: NextRequest) {
         console.error('[Draw email error]', err);
       }
     })();
-
->>>>>>> 3fda15e (added)
     return NextResponse.json({
       message: 'Draw published successfully',
       winnersCount: winnersList.length,
